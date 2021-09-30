@@ -10,6 +10,11 @@ class apache::params {
       $config  = '/etc/apache2/apache2.conf'
       $service = 'apache2'
     }
+    'windows': {
+      $package = 'apache-httpd'
+      $config = 'C:/Users/Administrator/AppData/Roaming/Apache24/conf/httpd.conf'
+      $service = 'apache'
+    }
   }
 }
 
