@@ -1,20 +1,23 @@
+#
 class apache::params {
-  case $operatingsystem {
-    'redhat': {
-      $package = 'httpd'
-      $config  = '/etc/httpd/conf/httpd.conf'
-      $service = 'httpd'
+  case $facts['os']['family'] {
+    'RedHat': {
+      $package  = 'httpd'
+      $config   = '/etc/httpd/conf/httpd.conf'
+      $service  = 'httpd'
     }
-    'debian': {
-      $package = 'apache2'
-      $config  = '/etc/apache2/apache2.conf'
-      $service = 'apache2'
+    'Debian': {
+      $package  = 'apache2'
+      $config   = '/etc/apache2/apache2.conf'
+      $service  = 'apache2'
     }
     'windows': {
-      $package = 'apache-httpd'
-      $config = 'C:/Users/Administrator/AppData/Roaming/Apache24/conf/httpd.conf'
-      $service = 'apache'
+      $package  = 'apache-httpd'
+      $config   = 'C:/Users/Administrator/AppData/Roaming/Apache24/conf/httpd.conf'
+      Package { provider => chocolatey, }
+    }
+    default: {
+      notice('OS not supported')
     }
   }
 }
-
