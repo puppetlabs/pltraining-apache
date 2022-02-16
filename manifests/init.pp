@@ -36,19 +36,22 @@
 # Copyright 2013 Your name here, unless otherwise noted.
 #
 class apache inherits apache::params {
+
   package { 'apache':
-    name   => $apache::params::package,
     ensure => present,
+    name   => $apache::params::package,
   }
+
   file { 'apache_config':
-    path    => $apache::params::config,
     ensure  => file,
-    source  => 'puppet:///modules/apache/${operatingsystem}.conf',
+    path    => $apache::params::config,
+    source  => "puppet:///modules/apache/${facts['os']['family']}.conf",
     require => Package['apache'],
   }
+
   service { 'apache':
-    name      => $apache::params::service,
     ensure    => running,
+    name      => $apache::params::service,
     enable    => true,
     subscribe => File['apache_config'],
   }
